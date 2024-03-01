@@ -1,4 +1,5 @@
 package com.breeze.container;
 
-public class HelloContainer {
+public class ProxyFactory {
+
 }

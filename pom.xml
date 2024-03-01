@@ -13,6 +13,8 @@
         <module>orm</module>
         <module>web-mvc</module>
         <module>container</module>
+        <module>container/framework</module>
+        <module>container/aop</module>
     </modules>
 
     <properties>
@@ -20,10 +22,25 @@
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <hutool.version>5.8.26</hutool.version>
+        <tomcat.embed.core>9.0.86</tomcat.embed.core>
+        <junit>4.13.1</junit>
     </properties>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-core -->
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>${tomcat.embed.core}</version>
+        </dependency>
 
+        <!--单元测试-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
