@@ -1,12 +1,11 @@
 package com.breeze.beans.factory.support;
 
-import com.breeze.beans.factory.BeanFactory;
 import com.breeze.beans.factory.config.BeanDefinition;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class DefaultListableBeanFactory implements BeanFactory {
+public class DefaultListableBeanFactory extends AbstractBeanFactory {
 
     private Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
 

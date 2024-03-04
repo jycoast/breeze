@@ -16,6 +16,7 @@
         <module>container/framework</module>
         <module>container/aop</module>
         <module>user-web</module>
+        <module>container/boot</module>
     </modules>
 
     <properties>
@@ -41,6 +42,22 @@
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/javax.ws.rs/jsr311-api -->
+        <dependency>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>jsr311-api</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+        <!-- Mysql Connector -->
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.28</version>
         </dependency>
 
         <!-- 参考依赖 -->
@@ -70,13 +87,6 @@
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
             <version>3.5.15</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/javax.ws.rs/jsr311-api -->
-        <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>jsr311-api</artifactId>
-            <version>1.1.1</version>
         </dependency>
 
     </dependencies>
