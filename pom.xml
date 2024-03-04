@@ -15,6 +15,7 @@
         <module>container</module>
         <module>container/framework</module>
         <module>container/aop</module>
+        <module>user-web</module>
     </modules>
 
     <properties>
@@ -22,8 +23,8 @@
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <hutool.version>5.8.26</hutool.version>
-        <tomcat.embed.core>9.0.86</tomcat.embed.core>
-        <junit>4.13.1</junit>
+        <tomcat.embed.core.version>9.0.86</tomcat.embed.core.version>
+        <junit.version>4.13.1</junit.version>
     </properties>
 
     <dependencies>
@@ -31,16 +32,53 @@
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-core</artifactId>
-            <version>${tomcat.embed.core}</version>
+            <version>${tomcat.embed.core.version}</version>
         </dependency>
 
         <!--单元测试-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${junit}</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- 参考依赖 -->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot</artifactId>
+            <version>2.7.18</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>5.3.32</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>5.3.32</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.mybatis/mybatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.5.15</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/javax.ws.rs/jsr311-api -->
+        <dependency>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>jsr311-api</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
