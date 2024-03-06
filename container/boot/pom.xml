@@ -10,5 +10,14 @@
 
     <groupId>com.breeze</groupId>
     <artifactId>boot</artifactId>
+    <version>1.0</version>
     <name>boot</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.breeze</groupId>
+            <artifactId>framework</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
 </project>

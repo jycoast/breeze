@@ -10,8 +10,9 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <groupId>org.example</groupId>
+    <groupId>com.breeze</groupId>
     <artifactId>framework</artifactId>
+    <version>1.0</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
