@@ -10,7 +10,7 @@ import org.junit.Test;
 public class IocTest {
 
     @Test
-    public void testBeanFactory() {
+    public void testBeanFactory() throws Exception {
         BeanFactory beanFactory = new DefaultListableBeanFactory();
 
         BeanDefinition beanDefinition = new GenericBeanDefinition(new UserService());
