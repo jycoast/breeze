@@ -60,6 +60,13 @@
             <version>8.0.28</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.3.0</version>
+        </dependency>
+
         <!-- 参考依赖 -->
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot -->
         <dependency>

@@ -1,11 +1,17 @@
 package web.servlet.context;
 
+import com.breeze.beans.factory.config.ConfigurableListableBeanFactory;
 import com.breeze.context.support.AbstractApplicationContext;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import web.embedded.tomcat.TomcatServletWebServerFactory;
 import web.servlet.ServletWebServerFactory;
 import web.servlet.WebServer;
 
 public class ServletWebServerApplicationContext extends AbstractApplicationContext {
+
+
+    private static final Log logger = LogFactory.getLog(ServletWebServerApplicationContext.class);
 
     private volatile WebServer webServer;
 
@@ -20,15 +26,19 @@ public class ServletWebServerApplicationContext extends AbstractApplicationConte
 
     private void createWebServer() {
         ServletWebServerFactory webServerFactory = getWebServerFactory();
-        this.webServer = webServerFactory.getWebServer();
         try {
-            webServer.start();
+            this.webServer = webServerFactory.getWebServer();
         } catch (Exception e) {
-            // throw new Exception("webServer start failed");
+            logger.error("webServer start failed");
         }
     }
 
     protected ServletWebServerFactory getWebServerFactory() {
         return new TomcatServletWebServerFactory();
+    }
+
+    @Override
+    public ConfigurableListableBeanFactory getBeanFactory() throws Exception {
+        return null;
     }
 }
