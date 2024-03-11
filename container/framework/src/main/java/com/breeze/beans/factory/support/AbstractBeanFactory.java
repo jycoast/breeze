@@ -3,22 +3,32 @@ package com.breeze.beans.factory.support;
 import com.breeze.beans.factory.BeanFactory;
 import com.breeze.beans.factory.config.BeanDefinition;
 import com.breeze.beans.factory.config.BeanPostProcessor;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry implements BeanFactory {
 
+    private static final Log logger = LogFactory.getLog(AbstractBeanFactory.class);
+
     private final List<BeanPostProcessor> beanPostProcessors = new CopyOnWriteArrayList<>();
 
     @Override
-    public Object getBean(String beanName) throws Exception {
-        Object singletonBean = getSingleton(beanName);
-        if (singletonBean != null) {
-            return singletonBean;
+    public Object getBean(String name) {
+        return doGetBean(name, null, null);
+    }
+
+    protected <T> T doGetBean(String name, Class<?> requireType, Object[] args) {
+        Object beanInstance = null;
+        try {
+            BeanDefinition beanDefinition = getBeanDefinition(name);
+            beanInstance = createBean(name, beanDefinition);
+        } catch (Exception e) {
+            logger.error("doGetBean failed");
         }
-        BeanDefinition beanDefinition = getBeanDefinition(beanName);
-        return createBean(beanName, beanDefinition);
+        return (T) beanInstance;
     }
 
     @Override
@@ -33,5 +43,9 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
 
     public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) {
 
+    }
+
+    public List<BeanPostProcessor> getBeanPostProcessors() {
+        return beanPostProcessors;
     }
 }

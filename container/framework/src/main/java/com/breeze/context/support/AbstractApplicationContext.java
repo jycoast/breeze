@@ -24,12 +24,16 @@ public abstract class AbstractApplicationContext implements ConfigurableApplicat
             // 启动
             onRefresh();
 
+            // 初始化非懒加载的Bean
+            finishBeanFactoryInitialization(beanFactory);
+
             // 发布启动完成事件
             finishRefresh();
         } catch (Exception ignored) {
 
         }
     }
+
 
     private ConfigurableListableBeanFactory ObtainFreshBeanFactory() {
         return null;
@@ -45,6 +49,10 @@ public abstract class AbstractApplicationContext implements ConfigurableApplicat
 
     protected void onRefresh() throws Exception {
 
+    }
+
+    private void finishBeanFactoryInitialization(ConfigurableListableBeanFactory beanFactory) {
+        beanFactory.preInitializationSingletons();
     }
 
     private void finishRefresh() {

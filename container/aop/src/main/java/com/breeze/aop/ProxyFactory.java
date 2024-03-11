@@ -1,4 +1,4 @@
-package com.breeze.container;
+package com.breeze.aop;
 
 public class ProxyFactory {
 
