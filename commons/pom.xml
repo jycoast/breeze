@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.example</groupId>
+    <groupId>com.breeze</groupId>
     <artifactId>commons</artifactId>
 
     <properties>
