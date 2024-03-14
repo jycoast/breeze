@@ -8,6 +8,7 @@
     </parent>
     <groupId>com.breeze.web</groupId>
     <artifactId>web-mvc</artifactId>
+    <version>1.0</version>
     <name>web-mvc</name>
 
     <dependencies>
@@ -17,7 +18,6 @@
             <version>9.0.86</version>
             <scope>package</scope>
         </dependency>
-
 
     </dependencies>
 </project>

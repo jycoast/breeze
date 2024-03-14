@@ -30,6 +30,12 @@
             <artifactId>boot</artifactId>
             <version>1.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.breeze.web</groupId>
+            <artifactId>web-mvc</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
 </project>

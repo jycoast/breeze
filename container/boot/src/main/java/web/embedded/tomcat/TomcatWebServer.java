@@ -29,6 +29,7 @@ public class TomcatWebServer implements WebServer {
         try {
             tomcat.start();
             startDamonAwaitThread();
+            logger.info("tomcat start");
         } catch (Exception ex) {
             logger.error("tomcat start failed");
             ex.printStackTrace();
