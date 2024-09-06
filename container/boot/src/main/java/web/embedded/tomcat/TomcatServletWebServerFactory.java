@@ -13,7 +13,7 @@ public class TomcatServletWebServerFactory implements ServletWebServerFactory {
         Tomcat tomcat = new Tomcat();
         Connector connector = new Connector(DEFAULT_PROTOCOL);
         connector.setThrowOnFailure(true);
-        connector.setPort(8888);
+        connector.setPort(8080);
         tomcat.getService().addConnector(connector);
         tomcat.getHost().setAutoDeploy(false);
 

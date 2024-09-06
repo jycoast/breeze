@@ -1,14 +1,18 @@
 package web.embedded.tomcat;
 
+import com.breeze.web.servlet.DisPatcherServlet;
+import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 import web.servlet.WebServer;
 
+import java.io.File;
+
 public class TomcatWebServer implements WebServer {
 
-    private static final Log logger = LogFactory.getLog(TomcatWebServer.class);
+    private static final Logger logger = LoggerFactory.getLogger(TomcatWebServer.class);
 
     private final Tomcat tomcat;
 
@@ -30,15 +34,19 @@ public class TomcatWebServer implements WebServer {
             tomcat.start();
             startDamonAwaitThread();
             logger.info("tomcat start");
+            // 创建根目录下的Context
+            String contextPath = "";
+            String docBase = new File(".").getAbsolutePath();
+            Context context = tomcat.addContext(contextPath, docBase);
+            tomcat.addServlet(contextPath, "disPatcherServlet", new DisPatcherServlet());
+            context.addServletMappingDecoded("/", "disPatcherServlet");
         } catch (Exception ex) {
-            logger.error("tomcat start failed");
-            ex.printStackTrace();
+            logger.error("tomcat start failed: {}", ex.getMessage(), ex);
             try {
                 this.tomcat.stop();
                 this.tomcat.destroy();
             } catch (Throwable e) {
-                logger.error("tomcat stop failed");
-                e.printStackTrace();
+                logger.error("tomcat stop failed: {}", e.getMessage(), e);
             }
         }
     }
