@@ -9,6 +9,7 @@ import org.springframework.util.Assert;
 import web.servlet.WebServer;
 
 import java.io.File;
+import java.nio.file.Files;
 
 public class TomcatWebServer implements WebServer {
 
@@ -31,15 +32,22 @@ public class TomcatWebServer implements WebServer {
 
     private void initialize() {
         try {
+            // 设置临时目录
+            String tempDir = Files.createTempDirectory("tomcat").toString();
+            System.setProperty("catalina.base", tempDir);
+            tomcat.setBaseDir(tempDir);
+
             tomcat.start();
+
             startDamonAwaitThread();
-            logger.info("tomcat start");
+
             // 创建根目录下的Context
             String contextPath = "";
             String docBase = new File(".").getAbsolutePath();
             Context context = tomcat.addContext(contextPath, docBase);
             tomcat.addServlet(contextPath, "disPatcherServlet", new DisPatcherServlet());
             context.addServletMappingDecoded("/", "disPatcherServlet");
+            logger.info("tomcat start success");
         } catch (Exception ex) {
             logger.error("tomcat start failed: {}", ex.getMessage(), ex);
             try {

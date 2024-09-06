@@ -10,7 +10,6 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <groupId>com.breeze</groupId>
     <artifactId>framework</artifactId>
     <version>1.0</version>
 
