@@ -7,7 +7,6 @@ public class ContextLoaderListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        System.out.println("ContextLoaderListener's contextInitialized method invoke");
         ServletContextListener.super.contextInitialized(sce);
     }
 

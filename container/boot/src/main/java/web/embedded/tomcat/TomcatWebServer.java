@@ -9,6 +9,7 @@ import org.springframework.util.Assert;
 import web.servlet.WebServer;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 
 public class TomcatWebServer implements WebServer {
@@ -32,21 +33,9 @@ public class TomcatWebServer implements WebServer {
 
     private void initialize() {
         try {
-            // 设置临时目录
-            String tempDir = Files.createTempDirectory("tomcat").toString();
-            System.setProperty("catalina.base", tempDir);
-            tomcat.setBaseDir(tempDir);
-
+            initializeContext();
             tomcat.start();
-
             startDamonAwaitThread();
-
-            // 创建根目录下的Context
-            String contextPath = "";
-            String docBase = new File(".").getAbsolutePath();
-            Context context = tomcat.addContext(contextPath, docBase);
-            tomcat.addServlet(contextPath, "disPatcherServlet", new DisPatcherServlet());
-            context.addServletMappingDecoded("/", "disPatcherServlet");
             logger.info("tomcat start success");
         } catch (Exception ex) {
             logger.error("tomcat start failed: {}", ex.getMessage(), ex);
@@ -57,6 +46,21 @@ public class TomcatWebServer implements WebServer {
                 logger.error("tomcat stop failed: {}", e.getMessage(), e);
             }
         }
+    }
+
+    private void initializeContext() throws IOException {
+        // 设置临时目录
+        String tempDir = Files.createTempDirectory("tomcat").toString();
+        System.setProperty("catalina.base", tempDir);
+        tomcat.setBaseDir(tempDir);
+
+        // 创建根目录下的Context
+        String contextPath = "";
+        String docBase = new File(".").getAbsolutePath();
+        Context context = tomcat.addContext(contextPath, docBase);
+
+        tomcat.addServlet(contextPath, "disPatcherServlet", new DisPatcherServlet());
+        context.addServletMappingDecoded("/", "disPatcherServlet");
     }
 
     private void startDamonAwaitThread() {
