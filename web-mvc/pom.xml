@@ -19,5 +19,10 @@
             <scope>package</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.breeze</groupId>
+            <artifactId>framework</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 </project>
