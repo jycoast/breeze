@@ -2,6 +2,8 @@ package com.breeze.context.support;
 
 import com.breeze.beans.factory.config.ConfigurableListableBeanFactory;
 import com.breeze.context.ConfigurableApplicationContext;
+import com.breeze.context.event.ApplicationEvent;
+import com.breeze.context.event.ContextRefreshedEvent;
 
 public abstract class AbstractApplicationContext implements ConfigurableApplicationContext {
 
@@ -56,6 +58,10 @@ public abstract class AbstractApplicationContext implements ConfigurableApplicat
     }
 
     private void finishRefresh() {
+        publishEvent(new ContextRefreshedEvent(this));
+    }
+
+    public void publishEvent(ApplicationEvent event) {
 
     }
 
