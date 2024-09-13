@@ -1,6 +1,7 @@
 package web.servlet.context;
 
 import com.breeze.beans.factory.config.ConfigurableListableBeanFactory;
+import com.breeze.beans.factory.support.DefaultListableBeanFactory;
 import com.breeze.context.support.AbstractApplicationContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -39,6 +40,6 @@ public class ServletWebServerApplicationContext extends AbstractApplicationConte
 
     @Override
     public ConfigurableListableBeanFactory getBeanFactory() throws Exception {
-        return null;
+        return new DefaultListableBeanFactory();
     }
 }

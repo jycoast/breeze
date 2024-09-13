@@ -40,9 +40,8 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
 
     protected abstract Object createBean(String beanName, BeanDefinition beanDefinition) throws Exception;
 
-
     public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) {
-
+        beanPostProcessors.add(beanPostProcessor);
     }
 
     public List<BeanPostProcessor> getBeanPostProcessors() {

@@ -1,6 +1,7 @@
 package com.breeze.beans.factory;
 
 import com.breeze.beans.factory.config.BeanDefinition;
+import com.breeze.context.annotation.ApplicationContextAwareProcessor;
 
 /**
  * Bean工厂
