@@ -15,7 +15,6 @@ public class DefaultListableBeanFactory extends AbstractAutoWireCapableBeanFacto
 
     private List<String> beanDefinitionNames = new ArrayList<>();
 
-
     @Override
     public void registerBeanDefinition(String beanName, BeanDefinition beanDefinition) {
         beanDefinitionMap.put(beanName, beanDefinition);

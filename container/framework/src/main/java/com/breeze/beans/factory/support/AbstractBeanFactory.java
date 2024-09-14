@@ -26,7 +26,7 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
             BeanDefinition beanDefinition = getBeanDefinition(name);
             beanInstance = createBean(name, beanDefinition);
         } catch (Exception e) {
-            logger.error("doGetBean failed");
+            logger.error("doGetBean failed", e);
         }
         return (T) beanInstance;
     }

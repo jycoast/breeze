@@ -3,6 +3,7 @@ package com.breeze.beans.factory.support;
 import com.breeze.beans.factory.config.BeanDefinition;
 import com.breeze.beans.factory.config.BeanPostProcessor;
 import com.breeze.beans.factory.config.InstantiationAwareBeanPostProcessor;
+import com.breeze.context.annotation.ApplicationContextAwareProcessor;
 
 /**
  * 具有自动装配能力的Bean工厂
@@ -45,8 +46,12 @@ public abstract class AbstractAutoWireCapableBeanFactory extends AbstractBeanFac
      * @param bean
      * @param beanDefinition
      */
-    private void applyPropertyValues(String beanName, Object bean, BeanDefinition beanDefinition) {
-
+    private void applyPropertyValues(String beanName, Object bean, BeanDefinition beanDefinition) throws Exception {
+        for (BeanPostProcessor processor : getBeanPostProcessors()) {
+            if (processor instanceof ApplicationContextAwareProcessor) {
+                processor.postProcessBeforeInitialization(bean, beanName);
+            }
+        }
     }
 
     protected Object resolveBeforeInstantiation(String beanName, BeanDefinition beanDefinition) {
