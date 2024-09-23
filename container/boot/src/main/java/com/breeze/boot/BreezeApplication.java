@@ -3,6 +3,7 @@ package com.breeze.boot;
 import com.breeze.context.ApplicationContext;
 import com.breeze.context.ConfigurableApplicationContext;
 import org.springframework.beans.BeanUtils;
+import web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
 import web.servlet.context.ServletWebServerApplicationContext;
 
 public class BreezeApplication {
@@ -32,7 +33,7 @@ public class BreezeApplication {
     }
 
     private ConfigurableApplicationContext createApplicationContext() {
-        // 创建 ServletWebServerApplicationContext 实例
-        return BeanUtils.instantiateClass(ServletWebServerApplicationContext.class);
+        // 创建 AnnotationConfigServletWebServerApplicationContext 实例
+        return BeanUtils.instantiateClass(AnnotationConfigServletWebServerApplicationContext.class);
     }
 }

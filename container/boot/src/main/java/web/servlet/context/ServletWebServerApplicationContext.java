@@ -3,18 +3,22 @@ package web.servlet.context;
 import com.breeze.beans.factory.config.ConfigurableListableBeanFactory;
 import com.breeze.beans.factory.support.DefaultListableBeanFactory;
 import com.breeze.context.support.AbstractApplicationContext;
+import com.breeze.context.support.GenericApplicationContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import web.embedded.tomcat.TomcatServletWebServerFactory;
 import web.servlet.ServletWebServerFactory;
 import web.servlet.WebServer;
 
-public class ServletWebServerApplicationContext extends AbstractApplicationContext {
-
+public class ServletWebServerApplicationContext extends GenericApplicationContext {
 
     private static final Log logger = LogFactory.getLog(ServletWebServerApplicationContext.class);
 
     private volatile WebServer webServer;
+
+    public ServletWebServerApplicationContext(DefaultListableBeanFactory beanFactory) {
+        super(beanFactory);
+    }
 
     @Override
     protected void onRefresh() throws Exception {

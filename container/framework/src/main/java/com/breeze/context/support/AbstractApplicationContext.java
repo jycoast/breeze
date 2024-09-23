@@ -30,6 +30,9 @@ public abstract class AbstractApplicationContext implements ConfigurableApplicat
         prepareBeanFactory(beanFactory);
 
         try {
+            // BeanFactory完成后
+            postBeanFactory(beanFactory);
+
             // 注册BeanPostProcessors
             registerBeanPostProcessors(beanFactory);
 
@@ -50,6 +53,10 @@ public abstract class AbstractApplicationContext implements ConfigurableApplicat
         } catch (Throwable err) {
             logger.error("Exception encountered during context initialization - cancelling refresh attempt: {}", err.getMessage());
         }
+    }
+
+    protected void postBeanFactory(ConfigurableListableBeanFactory beanFactory) {
+
     }
 
     private void initApplicationEventMultiCaster() throws Exception {

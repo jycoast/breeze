@@ -1,11 +1,12 @@
 package com.breeze.context.support;
 
 import com.breeze.beans.factory.config.ConfigurableListableBeanFactory;
+import com.breeze.beans.factory.support.BeanDefinitionRegistry;
 import com.breeze.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.util.Assert;
 
 
-public class GenericApplicationContext extends AbstractApplicationContext {
+public class GenericApplicationContext extends AbstractApplicationContext implements BeanDefinitionRegistry {
 
     private final DefaultListableBeanFactory beanFactory;
 
