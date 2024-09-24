@@ -31,11 +31,6 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
         return (T) beanInstance;
     }
 
-    @Override
-    public void registerBeanDefinition(String beanName, BeanDefinition beanDefinition) {
-
-    }
-
     protected abstract BeanDefinition getBeanDefinition(String beanName) throws Exception;
 
     protected abstract Object createBean(String beanName, BeanDefinition beanDefinition) throws Exception;

@@ -30,7 +30,7 @@ public abstract class AbstractApplicationContext implements ConfigurableApplicat
         prepareBeanFactory(beanFactory);
 
         try {
-            // BeanFactory完成后
+            // BeanFactory完成后，注册BeanDefinition
             postBeanFactory(beanFactory);
 
             // 注册BeanPostProcessors

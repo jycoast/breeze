@@ -16,6 +16,10 @@ public class ServletWebServerApplicationContext extends GenericApplicationContex
 
     private volatile WebServer webServer;
 
+    public ServletWebServerApplicationContext() {
+        super();
+    }
+
     public ServletWebServerApplicationContext(DefaultListableBeanFactory beanFactory) {
         super(beanFactory);
     }

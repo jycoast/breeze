@@ -11,21 +11,20 @@ public class AnnotationConfigServletWebServerApplicationContext extends ServletW
 
     private static final Logger logger = LoggerFactory.getLogger(AnnotationConfigServletWebServerApplicationContext.class);
 
-
     private AnnotatedBeanDefinitionReader reader;
 
     private ClassPathBeanDefinitionScanner scanner;
 
     private String[] basePackages;
 
-    public AnnotationConfigServletWebServerApplicationContext() throws Exception {
+    public AnnotationConfigServletWebServerApplicationContext() {
         this("com.breeze");
         this.reader = new AnnotatedBeanDefinitionReader(this);
         this.scanner = new ClassPathBeanDefinitionScanner(this);
     }
 
-    public AnnotationConfigServletWebServerApplicationContext(String... basePackages) throws Exception {
-        super(null);
+    public AnnotationConfigServletWebServerApplicationContext(String... basePackages) {
+        super();
         scan(basePackages);
     }
 
@@ -35,7 +34,6 @@ public class AnnotationConfigServletWebServerApplicationContext extends ServletW
 
     @Override
     protected void postBeanFactory(ConfigurableListableBeanFactory beanFactory) {
-        logger.info("start scan bean: {}", this.basePackages);
         scanner.scan(this.basePackages);
     }
 }
