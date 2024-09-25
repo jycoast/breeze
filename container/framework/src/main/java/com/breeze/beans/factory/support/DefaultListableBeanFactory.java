@@ -13,7 +13,7 @@ public class DefaultListableBeanFactory extends AbstractAutoWireCapableBeanFacto
 
     private final Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
 
-    private List<String> beanDefinitionNames = new ArrayList<>();
+    private final List<String> beanDefinitionNames = new ArrayList<>();
 
     @Override
     public void registerBeanDefinition(String beanName, BeanDefinition beanDefinition) {

@@ -4,7 +4,8 @@ import com.breeze.beans.factory.config.BeanDefinition;
 import com.breeze.beans.factory.config.BeanDefinitionHolder;
 import com.breeze.beans.factory.support.BeanDefinitionRegistry;
 import com.breeze.beans.factory.support.BeanNameGenerator;
-import com.breeze.beans.factory.support.PathMatchingResourcePatternResolver;
+import com.breeze.beans.factory.support.GenericBeanDefinition;
+import com.breeze.core.io.support.PathMatchingResourcePatternResolver;
 import com.breeze.beans.factory.support.ResourcePatternResolver;
 import com.breeze.core.io.Resource;
 import org.slf4j.Logger;
@@ -51,7 +52,7 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
         try {
             Resource[] resources = getResourcePatternResolver().getResources(packageSearchPath);
             for (Resource resource : resources) {
-                BeanDefinition beanDefinition = null;
+                BeanDefinition beanDefinition = new GenericBeanDefinition(null);
                 beanDefinitions.add(beanDefinition);
             }
         } catch (Throwable err) {
