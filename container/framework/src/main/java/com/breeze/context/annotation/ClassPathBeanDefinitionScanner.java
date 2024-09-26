@@ -51,6 +51,7 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
         logger.info("scan package path:{}", packageSearchPath);
         try {
             Resource[] resources = getResourcePatternResolver().getResources(packageSearchPath);
+            logger.info("load resources length：{}", resources.length);
             for (Resource resource : resources) {
                 BeanDefinition beanDefinition = new GenericBeanDefinition(null);
                 beanDefinitions.add(beanDefinition);
