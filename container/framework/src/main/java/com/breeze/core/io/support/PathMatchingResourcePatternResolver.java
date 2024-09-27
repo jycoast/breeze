@@ -1,20 +1,19 @@
 package com.breeze.core.io.support;
 
 import com.breeze.beans.factory.support.ResourcePatternResolver;
+import com.breeze.core.io.FileSystemResource;
 import com.breeze.core.io.Resource;
 import com.breeze.core.io.UrlResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.JarURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Enumeration;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -36,13 +35,13 @@ public class PathMatchingResourcePatternResolver implements ResourcePatternResol
     @Override
     public Resource[] getResources(String locationPattern) throws IOException {
         if (pathMatcher.isPattern(locationPattern.substring(CLASSPATH_ALL_URL_PREFIX.length()))) {
-            return findPathMathResources(locationPattern);
+            return findPathMatchingResources(locationPattern);
         } else {
             return findAllClassPathResources(locationPattern.substring(CLASSPATH_ALL_URL_PREFIX.length()));
         }
     }
 
-    private Resource[] findPathMathResources(String locationPattern) throws IOException {
+    private Resource[] findPathMatchingResources(String locationPattern) throws IOException {
         Set<Resource> result = new LinkedHashSet<>();
         String rootDirPath = "classpath*:com/breeze/";
         String subPattern = locationPattern.substring(rootDirPath.length()); //  **/*.class
@@ -51,6 +50,8 @@ public class PathMatchingResourcePatternResolver implements ResourcePatternResol
             URL rootDirUrl = rootDirResource.getURL();
             if (ResourceUtils.isJarURL(rootDirUrl)) {
                 result.addAll(doFindPathMatchingJarResource(rootDirResource, rootDirUrl, subPattern));
+            } else {
+                result.addAll(doFindPathMatchingFileResources(rootDirResource, subPattern));
             }
         }
         return result.toArray(new Resource[0]);
@@ -79,12 +80,64 @@ public class PathMatchingResourcePatternResolver implements ResourcePatternResol
         return result;
     }
 
+    private Set<Resource> doFindPathMatchingFileResources(Resource rootDirResource, String subPattern) {
+        File rootDir = null;
+        try {
+            rootDir = rootDirResource.getFile().getAbsoluteFile();
+        } catch (Exception ex) {
+            logger.error("Failed to resolve classpath resource [" + rootDirResource + "]", ex);
+            return Collections.emptySet();
+        }
+        return doFindMatchingFileSystemResources(rootDir, subPattern);
+    }
+
+    private Set<Resource> doFindMatchingFileSystemResources(File rootDir, String subPattern) {
+        Set<File> matchingFiles = retrieveMatchingFiles(rootDir, subPattern);
+        Set<Resource> result = new LinkedHashSet<>();
+        for (File matchingFile : matchingFiles) {
+            result.add(new FileSystemResource(matchingFile));
+        }
+        return result;
+    }
+
+    private Set<File> retrieveMatchingFiles(File rootDir, String pattern) {
+        String fullPattern = StringUtils.replace(rootDir.getAbsolutePath(), File.separator, "/");
+        if (!pattern.startsWith("/")) {
+            fullPattern += "/";
+        }
+        fullPattern = fullPattern + StringUtils.replace(pattern, File.separator, "/");
+        Set<File> result = new LinkedHashSet<>(8);
+        doRetrieveMatchingFiles(fullPattern, rootDir, result);
+        return result;
+    }
+
+    private void doRetrieveMatchingFiles(String fullPattern, File rootDir, Set<File> result) {
+        for (File content : listDirectory(rootDir)) {
+            String currPath = StringUtils.replace(content.getAbsolutePath(), File.separator, "/");
+            if (content.isDirectory() && pathMatcher.matchStart(fullPattern, currPath + "/")) {
+                doRetrieveMatchingFiles(fullPattern, content, result);
+            }
+            if (pathMatcher.match(fullPattern, currPath)) {
+                result.add(content);
+            }
+        }
+    }
+
     private void addAllClassLoaderJarRoots(ClassLoader cl, Set<Resource> result) {
 
     }
 
     private Resource convertClassLoaderURL(URL url) {
         return new UrlResource(url);
+    }
+
+    private File[] listDirectory(File dir) {
+        File[] files = dir.listFiles();
+        if (files == null) {
+            return new File[0];
+        }
+        Arrays.sort(files, Comparator.comparing(File::getName));
+        return files;
     }
 
     private Set<Resource> doFindPathMatchingJarResource(Resource rootDirResource, URL rootDirUrl, String subPattern) throws IOException {

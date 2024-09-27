@@ -1,6 +1,8 @@
 package com.breeze.core.io;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 
 /**
@@ -9,4 +11,6 @@ import java.net.URL;
 public interface Resource {
 
     URL getURL() throws FileNotFoundException;
+
+    File getFile() throws IOException;
 }

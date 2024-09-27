@@ -1,6 +1,10 @@
 package com.breeze.core.io;
 
+import org.springframework.util.ResourceUtils;
+
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.net.URL;
 
 /**
@@ -17,5 +21,10 @@ public class UrlResource extends AbstractResource {
     @Override
     public URL getURL() throws FileNotFoundException {
         return this.url;
+    }
+
+    @Override
+    public File getFile() throws IOException {
+        return ResourceUtils.getFile(url, "description");
     }
 }

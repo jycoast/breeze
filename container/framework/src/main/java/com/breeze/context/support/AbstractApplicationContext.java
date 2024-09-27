@@ -51,7 +51,7 @@ public abstract class AbstractApplicationContext implements ConfigurableApplicat
             // 发布启动完成事件
             finishRefresh();
         } catch (Throwable err) {
-            logger.error("Exception encountered during context initialization - cancelling refresh attempt: {}", err.getMessage());
+            logger.error("Exception encountered during context initialization - cancelling refresh attempt: {}", err.getMessage(), err);
         }
     }
 

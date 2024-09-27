@@ -4,12 +4,14 @@ import com.breeze.beans.factory.config.BeanDefinition;
 import com.breeze.beans.factory.config.BeanDefinitionHolder;
 import com.breeze.beans.factory.support.BeanDefinitionRegistry;
 import com.breeze.beans.factory.support.BeanNameGenerator;
-import com.breeze.beans.factory.support.GenericBeanDefinition;
 import com.breeze.core.io.support.PathMatchingResourcePatternResolver;
 import com.breeze.beans.factory.support.ResourcePatternResolver;
 import com.breeze.core.io.Resource;
+import com.breeze.core.type.MetadataReader;
+import com.breeze.core.type.SimpleMetadataReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.util.ClassUtils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -53,7 +55,8 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
             Resource[] resources = getResourcePatternResolver().getResources(packageSearchPath);
             logger.info("load resources length：{}", resources.length);
             for (Resource resource : resources) {
-                BeanDefinition beanDefinition = new GenericBeanDefinition(null);
+                MetadataReader metadataReader = new SimpleMetadataReader(resource, ClassUtils.getDefaultClassLoader());
+                BeanDefinition beanDefinition = new ScannedGenericBeanDefinition(metadataReader);
                 beanDefinitions.add(beanDefinition);
             }
         } catch (Throwable err) {
