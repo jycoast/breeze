@@ -9,4 +9,9 @@ public class FileSystemResource extends AbstractResource {
     public FileSystemResource(File file) {
         this.file = file;
     }
+
+    @Override
+    public File getFile() {
+        return this.file;
+    }
 }

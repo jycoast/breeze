@@ -7,7 +7,7 @@ import org.springframework.util.ClassUtils;
 
 import java.beans.Introspector;
 
-public class AnnotationBeanNameGenerator implements BeanNameGenerator {
+class AnnotationBeanNameGenerator implements BeanNameGenerator {
 
     /**
      * 单例
@@ -16,7 +16,7 @@ public class AnnotationBeanNameGenerator implements BeanNameGenerator {
 
     @Override
     public String generateBeanName(BeanDefinition beanDefinition, BeanDefinitionRegistry registry) {
-        String beanClassName = beanDefinition.getBean().getClass().getName();
+        String beanClassName = beanDefinition.getBeanClassName();
         String shortClassName = ClassUtils.getShortName(beanClassName);
         return Introspector.decapitalize(shortClassName);
     }

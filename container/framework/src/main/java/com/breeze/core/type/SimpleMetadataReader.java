@@ -9,13 +9,20 @@ public class SimpleMetadataReader implements MetadataReader {
 
     private final Resource resource;
 
+    private final ClassLoader classLoader;
+
     public SimpleMetadataReader(Resource resource, ClassLoader classLoader) {
         this.resource = resource;
+        this.classLoader = classLoader;
     }
 
     @Override
     public Resource getResource() {
         return this.resource;
+    }
+
+    public ClassLoader getClassLoader() {
+        return this.classLoader;
     }
 
     @Override

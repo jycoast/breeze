@@ -2,16 +2,9 @@ package com.breeze.beans.factory.support;
 
 import com.breeze.beans.factory.config.BeanDefinition;
 
-public class GenericBeanDefinition implements BeanDefinition {
+public class GenericBeanDefinition extends AbstractBeanDefinition {
 
-    private Object beanClass;
-
-    public GenericBeanDefinition(Object beanClass) {
-        this.beanClass = beanClass;
-    }
-
-    @Override
-    public Object getBean() {
-        return beanClass;
+    public GenericBeanDefinition(BeanDefinition original) {
+        super(original);
     }
 }

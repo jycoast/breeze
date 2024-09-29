@@ -98,8 +98,10 @@ public abstract class AbstractAutoWireCapableBeanFactory extends AbstractBeanFac
         Class<?> beanClass = mbd.getBeanClass();
         Object beanInstance = null;
         if (beanClass != null) {
-            Constructor<?> declaredConstructor = beanClass.getDeclaredConstructor();
-            beanInstance = BeanUtils.instantiateClass(declaredConstructor);
+            if (!beanClass.isInterface()) {
+                Constructor<?> declaredConstructor = beanClass.getDeclaredConstructor();
+                beanInstance = BeanUtils.instantiateClass(declaredConstructor);
+            }
         }
         return beanInstance;
     }

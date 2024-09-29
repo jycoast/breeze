@@ -40,8 +40,7 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
         for (String basePackage : basePackages) {
             Set<BeanDefinition> beanDefinitions = findCandidateComponents(basePackage);
             for (BeanDefinition beanDefinition : beanDefinitions) {
-//                String beanName = beanNameGenerator.generateBeanName(beanDefinition, registry);
-                String beanName = "test";
+                String beanName = beanNameGenerator.generateBeanName(beanDefinition, registry);
                 BeanDefinitionHolder beanDefinitionHolder = new BeanDefinitionHolder(beanDefinition, beanName);
                 registerBeanDefinition(beanDefinitionHolder, this.registry);
             }

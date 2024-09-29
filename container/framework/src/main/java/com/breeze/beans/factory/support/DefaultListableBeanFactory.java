@@ -39,7 +39,7 @@ public class DefaultListableBeanFactory extends AbstractAutoWireCapableBeanFacto
         List<String> beanNames = new ArrayList<>(beanDefinitionNames);
         for (String beanName : beanNames) {
             Object bean = getBean(beanName);
-            logger.info("getBean success :{}", bean);
+            logger.info("InitializationSingletons success, beanName : {}, bean : {}", beanName, bean);
         }
     }
 }

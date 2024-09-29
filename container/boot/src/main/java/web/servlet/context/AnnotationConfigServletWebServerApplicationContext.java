@@ -18,7 +18,7 @@ public class AnnotationConfigServletWebServerApplicationContext extends ServletW
     private String[] basePackages;
 
     public AnnotationConfigServletWebServerApplicationContext() {
-        this("com.breeze");
+        this("com.breeze.user");
         this.reader = new AnnotatedBeanDefinitionReader(this);
         this.scanner = new ClassPathBeanDefinitionScanner(this);
     }

@@ -14,8 +14,8 @@ public abstract class AbstractBeanDefinition implements BeanDefinition {
     }
 
     @Override
-    public Object getBean() {
-        return null;
+    public String getBeanClassName() {
+        return getBeanClass().getName();
     }
 
     public Class<?> getBeanClass() {

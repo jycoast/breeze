@@ -6,11 +6,11 @@ import com.breeze.context.ApplicationContext;
 
 public class ApplicationContextAwareProcessor implements BeanPostProcessor {
 
+    private final ApplicationContext applicationContext;
+
     public ApplicationContextAwareProcessor(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
-
-    private ApplicationContext applicationContext;
 
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws Exception {
