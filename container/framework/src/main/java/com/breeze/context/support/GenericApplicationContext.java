@@ -22,11 +22,11 @@ public class GenericApplicationContext extends AbstractApplicationContext implem
 
     @Override
     public void registerBeanDefinition(String beanName, BeanDefinition beanDefinition) {
-
+        beanFactory.registerBeanDefinition(beanName, beanDefinition);
     }
 
     @Override
-    public ConfigurableListableBeanFactory getBeanFactory() throws Exception {
+    public ConfigurableListableBeanFactory getBeanFactory() {
         return this.beanFactory;
     }
 }

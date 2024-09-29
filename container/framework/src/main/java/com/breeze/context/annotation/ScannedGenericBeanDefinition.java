@@ -5,7 +5,7 @@ import com.breeze.core.type.AnnotationMetadata;
 import com.breeze.core.type.MetadataReader;
 
 /**
- * 扫描到的BeanDefinition
+ * 从classpath 扫描到的BeanDefinition
  */
 public class ScannedGenericBeanDefinition extends GenericBeanDefinition {
 

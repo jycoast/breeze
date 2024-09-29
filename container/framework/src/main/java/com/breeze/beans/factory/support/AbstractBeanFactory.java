@@ -15,7 +15,6 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
 
     private final List<BeanPostProcessor> beanPostProcessors = new CopyOnWriteArrayList<>();
 
-    @Override
     public Object getBean(String name) {
         return doGetBean(name, null, null);
     }
@@ -23,8 +22,8 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
     protected <T> T doGetBean(String name, Class<?> requireType, Object[] args) {
         Object beanInstance = null;
         try {
-            BeanDefinition beanDefinition = getBeanDefinition(name);
-            beanInstance = createBean(name, beanDefinition);
+            RootBeanDefinition mbd = getMergedLocalBeanDefinition(name);
+            beanInstance = createBean(name, mbd);
         } catch (Exception e) {
             logger.error("doGetBean failed", e);
         }
@@ -33,7 +32,7 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
 
     protected abstract BeanDefinition getBeanDefinition(String beanName) throws Exception;
 
-    protected abstract Object createBean(String beanName, BeanDefinition beanDefinition) throws Exception;
+    protected abstract Object createBean(String beanName, RootBeanDefinition beanDefinition) throws Exception;
 
     public void addBeanPostProcessor(BeanPostProcessor beanPostProcessor) {
         beanPostProcessors.add(beanPostProcessor);
@@ -41,5 +40,11 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
 
     public List<BeanPostProcessor> getBeanPostProcessors() {
         return beanPostProcessors;
+    }
+
+    private RootBeanDefinition getMergedLocalBeanDefinition(String name) throws Exception {
+        BeanDefinition beanDefinition = getBeanDefinition(name);
+        RootBeanDefinition rootBeanDefinition = new RootBeanDefinition(beanDefinition);
+        return rootBeanDefinition;
     }
 }

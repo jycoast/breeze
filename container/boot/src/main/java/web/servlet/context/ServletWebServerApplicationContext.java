@@ -45,9 +45,4 @@ public class ServletWebServerApplicationContext extends GenericApplicationContex
     protected ServletWebServerFactory getWebServerFactory() {
         return new TomcatServletWebServerFactory();
     }
-
-    @Override
-    public ConfigurableListableBeanFactory getBeanFactory() throws Exception {
-        return new DefaultListableBeanFactory();
-    }
 }
