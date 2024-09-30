@@ -2,5 +2,5 @@ package web.servlet;
 
 public interface ServletWebServerFactory {
 
-    WebServer getWebServer();
+    WebServer getWebServer(ServletContextInitializer... initializers);
 }

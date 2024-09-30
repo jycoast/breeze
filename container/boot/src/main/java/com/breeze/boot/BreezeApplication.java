@@ -4,9 +4,7 @@ import com.breeze.context.ApplicationContext;
 import com.breeze.context.ConfigurableApplicationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import web.servlet.context.AnnotationConfigServletWebServerApplicationContext;
-import web.servlet.context.ServletWebServerApplicationContext;
 
 public class BreezeApplication {
 

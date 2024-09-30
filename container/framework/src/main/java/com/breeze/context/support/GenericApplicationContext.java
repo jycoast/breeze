@@ -6,7 +6,6 @@ import com.breeze.beans.factory.support.BeanDefinitionRegistry;
 import com.breeze.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.util.Assert;
 
-
 public class GenericApplicationContext extends AbstractApplicationContext implements BeanDefinitionRegistry {
 
     private final DefaultListableBeanFactory beanFactory;

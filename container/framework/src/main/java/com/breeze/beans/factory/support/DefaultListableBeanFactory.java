@@ -4,8 +4,10 @@ import com.breeze.beans.factory.config.BeanDefinition;
 import com.breeze.beans.factory.config.ConfigurableListableBeanFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -41,5 +43,10 @@ public class DefaultListableBeanFactory extends AbstractAutoWireCapableBeanFacto
             Object bean = getBean(beanName);
             logger.info("InitializationSingletons success, beanName : {}, bean : {}", beanName, bean);
         }
+    }
+
+    @Override
+    public <T> Map<String, T> getBeansOfType(Class<T> type) throws BeansException {
+        return new HashMap<>();
     }
 }

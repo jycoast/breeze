@@ -26,6 +26,10 @@ public class DisPatcherServlet extends FrameworkServlet {
 
     private List<HandlerAdapter> handlerAdapters;
 
+    public DisPatcherServlet() {
+        super();
+    }
+
     @Override
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.info("DisPatcherServlet receive request url: {}", request.getRequestURI());
