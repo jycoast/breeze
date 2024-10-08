@@ -52,7 +52,7 @@ public class ServletWebServerApplicationContext extends GenericApplicationContex
             this.webServer = webServerFactory.getWebServer();
             selfInitialize(this.servletContext);
         } catch (Exception e) {
-            logger.error("webServer start failed");
+            logger.error("webServer start failed:{}", e);
         }
     }
 
