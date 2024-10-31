@@ -1,0 +1,4 @@
+三级缓存：
+singletonObjects中缓存的是已经经历了完整生命周期的bean对象。 
+earlySingletonObjects比singletonObjects多了一个early，表示缓存的是早期的bean对象。 早期是什么意思？表示Bean的生命周期还没走完就把这个Bean放入了earlySingletonObjects。
+singletonFactories中缓存的是ObjectFactory，表示对象工厂，表示用来创建早期bean对象的工厂。

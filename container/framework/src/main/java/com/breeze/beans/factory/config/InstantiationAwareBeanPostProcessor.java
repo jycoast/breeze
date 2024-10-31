@@ -5,7 +5,21 @@ package com.breeze.beans.factory.config;
  */
 public interface InstantiationAwareBeanPostProcessor extends BeanPostProcessor {
 
+    /**
+     * 实例化前
+     *
+     * @param beanClass
+     * @param beanName
+     * @return
+     */
     Object postProcessBeforeInstantiation(Class<?> beanClass, String beanName);
 
+    /**
+     * 实例化后回调
+     *
+     * @param bean
+     * @param beanName
+     * @return
+     */
     Object postProcessAfterInstantiation(Object bean, String beanName);
 }
