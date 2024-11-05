@@ -45,7 +45,7 @@ public class TomcatServletWebServerFactory implements ServletWebServerFactory {
 
     private void configContext(Context context, ServletContextInitializer... initializers) {
         TomcatStarter starter = new TomcatStarter(initializers);
-        context.addServletContainerInitializer(starter, NO_CLASSES);
+        context.addServletContainerInitializer(starter, Collections.singleton(TomcatStarter.class));
     }
 
     protected final File createTempDir(String prefix, int port) {

@@ -6,11 +6,11 @@ import com.breeze.web.context.WebApplicationContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import web.embedded.tomcat.TomcatServletWebServerFactory;
+import web.servlet.ServletContextInitializer;
 import web.servlet.ServletWebServerFactory;
 import web.servlet.WebServer;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 
 public class ServletWebServerApplicationContext extends GenericApplicationContext implements WebApplicationContext {
 
@@ -49,20 +49,26 @@ public class ServletWebServerApplicationContext extends GenericApplicationContex
     private void createWebServer() {
         ServletWebServerFactory webServerFactory = getWebServerFactory();
         try {
-            this.webServer = webServerFactory.getWebServer();
+            this.webServer = webServerFactory.getWebServer(getSelfInitializer());
             selfInitialize(this.servletContext);
         } catch (Exception e) {
             logger.error("webServer start failed:{}", e);
         }
     }
 
-    private void selfInitialize(ServletContext servletContext) throws ServletException {
+    private ServletContextInitializer getSelfInitializer() {
+        return this::selfInitialize;
+    }
+
+    private void selfInitialize(ServletContext servletContext) {
         prepareWebApplicationContext(servletContext);
     }
 
     protected void prepareWebApplicationContext(ServletContext servletContext) {
+        servletContext.log("Initializing Spring embedded WebApplicationContext");
         try {
             servletContext.setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, this);
+            setServletContext(servletContext);
         } catch (RuntimeException | Error ex) {
             logger.error("Context initialization failed", ex);
             servletContext.setAttribute(ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, ex);

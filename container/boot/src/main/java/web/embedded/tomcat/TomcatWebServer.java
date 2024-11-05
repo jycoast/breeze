@@ -58,6 +58,7 @@ public class TomcatWebServer implements WebServer {
         String contextPath = "";
         String docBase = new File(".").getAbsolutePath();
         Context context = tomcat.addContext(contextPath, docBase);
+        context.addLifecycleListener(new Tomcat.FixContextListener());
 
         tomcat.addServlet(contextPath, "disPatcherServlet", new DisPatcherServlet());
         context.addServletMappingDecoded("/", "disPatcherServlet");
