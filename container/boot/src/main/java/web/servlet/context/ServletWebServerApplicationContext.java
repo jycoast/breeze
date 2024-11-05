@@ -1,6 +1,7 @@
 package web.servlet.context;
 
 import com.breeze.beans.factory.support.DefaultListableBeanFactory;
+import com.breeze.boot.autoConfigure.web.DispatcherServletRegistrationBean;
 import com.breeze.context.support.GenericApplicationContext;
 import com.breeze.web.context.WebApplicationContext;
 import org.apache.commons.logging.Log;
@@ -11,6 +12,8 @@ import web.servlet.ServletWebServerFactory;
 import web.servlet.WebServer;
 
 import javax.servlet.ServletContext;
+import java.util.Collection;
+import java.util.Collections;
 
 public class ServletWebServerApplicationContext extends GenericApplicationContext implements WebApplicationContext {
 
@@ -62,6 +65,13 @@ public class ServletWebServerApplicationContext extends GenericApplicationContex
 
     private void selfInitialize(ServletContext servletContext) {
         prepareWebApplicationContext(servletContext);
+        for (ServletContextInitializer initializer : getServletContextInitializerBeans()) {
+            initializer.onStartup(servletContext);
+        }
+    }
+
+    private Collection<ServletContextInitializer> getServletContextInitializerBeans() {
+        return Collections.singleton(new DispatcherServletRegistrationBean(null));
     }
 
     protected void prepareWebApplicationContext(ServletContext servletContext) {

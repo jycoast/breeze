@@ -1,0 +1,2 @@
+com.breeze.boot.autoConfigure.EnableAutoConfiguration=
+com.breeze.boot.autoConfigure.web.servlet.DispatcherServletAutoConfiguration
