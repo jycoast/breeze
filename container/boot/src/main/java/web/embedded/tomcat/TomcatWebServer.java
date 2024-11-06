@@ -1,6 +1,5 @@
 package web.embedded.tomcat;
 
-import com.breeze.web.servlet.DisPatcherServlet;
 import org.apache.catalina.Context;
 import org.apache.catalina.startup.Tomcat;
 import org.slf4j.Logger;
@@ -59,9 +58,6 @@ public class TomcatWebServer implements WebServer {
         String docBase = new File(".").getAbsolutePath();
         Context context = tomcat.addContext(contextPath, docBase);
         context.addLifecycleListener(new Tomcat.FixContextListener());
-
-        tomcat.addServlet(contextPath, "disPatcherServlet", new DisPatcherServlet());
-        context.addServletMappingDecoded("/", "disPatcherServlet");
     }
 
     private void startDamonAwaitThread() {
@@ -84,11 +80,11 @@ public class TomcatWebServer implements WebServer {
 
     @Override
     public void stop() throws Exception {
-        tomcat.start();
+        tomcat.stop();
     }
 
     @Override
     public void getPort() throws Exception {
-
+        tomcat.getConnector().getLocalPort();
     }
 }

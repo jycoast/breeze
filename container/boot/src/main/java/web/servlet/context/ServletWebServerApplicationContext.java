@@ -1,9 +1,11 @@
 package web.servlet.context;
 
+import com.breeze.beans.factory.config.ConfigurableListableBeanFactory;
 import com.breeze.beans.factory.support.DefaultListableBeanFactory;
 import com.breeze.boot.autoConfigure.web.DispatcherServletRegistrationBean;
 import com.breeze.context.support.GenericApplicationContext;
 import com.breeze.web.context.WebApplicationContext;
+import com.breeze.web.servlet.DisPatcherServlet;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import web.embedded.tomcat.TomcatServletWebServerFactory;
@@ -71,7 +73,12 @@ public class ServletWebServerApplicationContext extends GenericApplicationContex
     }
 
     private Collection<ServletContextInitializer> getServletContextInitializerBeans() {
-        return Collections.singleton(new DispatcherServletRegistrationBean(null));
+        ConfigurableListableBeanFactory beanFactory = getBeanFactory();
+        DispatcherServletRegistrationBean dispatcherServletRegistrationBean =
+                beanFactory.getBean("dispatcherServletRegistrationBean", DispatcherServletRegistrationBean.class);
+        DisPatcherServlet disPatcherServlet = beanFactory.getBean("disPatcherServlet", DisPatcherServlet.class);
+        dispatcherServletRegistrationBean.setServlet(disPatcherServlet);
+        return Collections.singleton(dispatcherServletRegistrationBean);
     }
 
     protected void prepareWebApplicationContext(ServletContext servletContext) {

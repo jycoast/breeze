@@ -5,6 +5,7 @@ import com.breeze.beans.factory.config.BeanDefinition;
 import com.breeze.beans.factory.config.BeanPostProcessor;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.BeansException;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -19,10 +20,20 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
         return doGetBean(name, null, null);
     }
 
+    @Override
+    public <T> T getBean(String name, Class<T> requiredType) throws BeansException {
+        return doGetBean(name, requiredType, null);
+    }
+
     protected <T> T doGetBean(String name, Class<?> requireType, Object[] args) {
         Object beanInstance = null;
         try {
-            RootBeanDefinition mbd = getMergedLocalBeanDefinition(name);
+            RootBeanDefinition mbd;
+            if (requireType != null) {
+                mbd = getMergedLocalBeanDefinition(name, requireType);
+            } else {
+                mbd = getMergedLocalBeanDefinition(name);
+            }
             beanInstance = createBean(name, mbd);
         } catch (Exception e) {
             logger.error("doGetBean failed", e);
@@ -45,6 +56,12 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
     private RootBeanDefinition getMergedLocalBeanDefinition(String name) throws Exception {
         BeanDefinition beanDefinition = getBeanDefinition(name);
         RootBeanDefinition rootBeanDefinition = new RootBeanDefinition(beanDefinition);
+        return rootBeanDefinition;
+    }
+
+    private RootBeanDefinition getMergedLocalBeanDefinition(String name, Class<?> requiredType) throws Exception {
+        RootBeanDefinition rootBeanDefinition = new RootBeanDefinition(null);
+        rootBeanDefinition.setBeanClass(requiredType);
         return rootBeanDefinition;
     }
 }
