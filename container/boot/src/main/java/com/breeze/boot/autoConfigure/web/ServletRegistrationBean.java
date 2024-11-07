@@ -14,6 +14,8 @@ public abstract class ServletRegistrationBean<T extends Servlet> implements Serv
         this.servlet = servlet;
     }
 
+    private static final String[] DEFAULT_MAPPINGS = {"/*"};
+
     private T servlet;
 
     protected String getDescription() {
@@ -41,6 +43,6 @@ public abstract class ServletRegistrationBean<T extends Servlet> implements Serv
     }
 
     protected void configure(ServletRegistration.Dynamic registration) {
-        registration.addMapping("/");
+        registration.addMapping(DEFAULT_MAPPINGS);
     }
 }

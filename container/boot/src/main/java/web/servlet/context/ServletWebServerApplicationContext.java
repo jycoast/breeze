@@ -23,6 +23,10 @@ public class ServletWebServerApplicationContext extends GenericApplicationContex
 
     private volatile WebServer webServer;
 
+    public ServletContext getServletContext() {
+        return servletContext;
+    }
+
     private ServletContext servletContext;
 
     public ServletWebServerApplicationContext() {
@@ -47,17 +51,22 @@ public class ServletWebServerApplicationContext extends GenericApplicationContex
         try {
             createWebServer();
         } catch (Throwable ex) {
+            logger.error("unable to start web server", ex);
             throw new Exception("unable to start web server");
         }
     }
 
     private void createWebServer() {
-        ServletWebServerFactory webServerFactory = getWebServerFactory();
-        try {
+        ServletContext servletContext = getServletContext();
+        if (webServer == null && servletContext == null) {
+            ServletWebServerFactory webServerFactory = getWebServerFactory();
             this.webServer = webServerFactory.getWebServer(getSelfInitializer());
-            selfInitialize(this.servletContext);
-        } catch (Exception e) {
-            logger.error("webServer start failed:{}", e);
+        } else if (servletContext != null) {
+            try {
+                getSelfInitializer().onStartup(servletContext);
+            } catch (Exception e) {
+                logger.error("webServer start failed:{}", e);
+            }
         }
     }
 
@@ -74,11 +83,12 @@ public class ServletWebServerApplicationContext extends GenericApplicationContex
 
     private Collection<ServletContextInitializer> getServletContextInitializerBeans() {
         ConfigurableListableBeanFactory beanFactory = getBeanFactory();
-        DispatcherServletRegistrationBean dispatcherServletRegistrationBean =
+        DispatcherServletRegistrationBean registrationBean =
                 beanFactory.getBean("dispatcherServletRegistrationBean", DispatcherServletRegistrationBean.class);
-        DisPatcherServlet disPatcherServlet = beanFactory.getBean("disPatcherServlet", DisPatcherServlet.class);
-        dispatcherServletRegistrationBean.setServlet(disPatcherServlet);
-        return Collections.singleton(dispatcherServletRegistrationBean);
+        DisPatcherServlet disPatcherServlet =
+                beanFactory.getBean("disPatcherServlet", DisPatcherServlet.class);
+        registrationBean.setServlet(disPatcherServlet);
+        return Collections.singleton(registrationBean);
     }
 
     protected void prepareWebApplicationContext(ServletContext servletContext) {
